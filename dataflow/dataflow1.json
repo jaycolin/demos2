@@ -125,7 +125,7 @@
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 0) ~> sink1"
+				"     saveOrder: 1) ~> sink1"
 			]
 		}
 	}
