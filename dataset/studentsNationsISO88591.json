@@ -1,0 +1,20 @@
+{
+	"name": "studentsNationsISO88591",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "studentsNationsISO88591.json",
+				"container": "nations"
+			},
+			"encodingName": "ISO-8859-1"
+		},
+		"schema": {}
+	}
+}

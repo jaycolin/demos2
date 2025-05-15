@@ -26,7 +26,21 @@
 						"referenceName": "nationsDated",
 						"type": "DatasetReference"
 					},
-					"name": "jsonUtf8"
+					"name": "blobNationsDated"
+				},
+				{
+					"dataset": {
+						"referenceName": "studentsNationsUtf8",
+						"type": "DatasetReference"
+					},
+					"name": "studentsNationsUtf8"
+				},
+				{
+					"dataset": {
+						"referenceName": "studentsNationsISO88591",
+						"type": "DatasetReference"
+					},
+					"name": "studentsNationsISO88591"
 				}
 			],
 			"transformations": [
@@ -88,7 +102,15 @@
 				"          currentDate as string",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> jsonUtf8"
+				"     skipDuplicateMapOutputs: true) ~> blobNationsDated",
+				"leftJoinWithNations sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> studentsNationsUtf8",
+				"leftJoinWithNations sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> studentsNationsISO88591"
 			]
 		}
 	}

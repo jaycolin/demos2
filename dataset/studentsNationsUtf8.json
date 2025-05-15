@@ -1,0 +1,19 @@
+{
+	"name": "studentsNationsUtf8",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "studentsNationsUtf8.json",
+				"container": "nations"
+			}
+		},
+		"schema": {}
+	}
+}
