@@ -27,6 +27,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "jsonUtf8"
+				},
+				{
+					"dataset": {
+						"referenceName": "studentsNationsISO88591",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
 				}
 			],
 			"transformations": [
@@ -38,6 +45,9 @@
 				},
 				{
 					"name": "rules"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -73,6 +83,22 @@
 				"     broadcast: 'auto')~> leftJoinWithNations",
 				"leftJoinWithNations alterRow(deleteIf(not(hasPath(students@name))),",
 				"     insertIf(true())) ~> rules",
+				"leftJoinWithNations select(mapColumn(",
+				"          college,",
+				"          number_of_students,",
+				"          name = nations@name,",
+				"          capital,",
+				"          population,",
+				"          area,",
+				"          currency,",
+				"          languages,",
+				"          region,",
+				"          subregion,",
+				"          flag,",
+				"          currentDate",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
 				"nationsWithDate sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -88,7 +114,11 @@
 				"          currentDate as string",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> jsonUtf8"
+				"     skipDuplicateMapOutputs: true) ~> jsonUtf8",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
