@@ -33,10 +33,14 @@
 						"referenceName": "studentsNationsISO88591",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "saveBlob"
 				},
 				{
-					"name": "sink2"
+					"dataset": {
+						"referenceName": "RestResource1",
+						"type": "DatasetReference"
+					},
+					"name": "pushToREST"
 				}
 			],
 			"transformations": [
@@ -121,11 +125,22 @@
 				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1",
+				"     skipDuplicateMapOutputs: true) ~> saveBlob",
 				"rules sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     deletable:true,",
+				"     insertable:true,",
+				"     updateable:true,",
+				"     upsertable:true,",
+				"     insertHttpMethod: 'POST',",
+				"     deleteHttpMethod: 'DELETE',",
+				"     upsertHttpMethod: 'PUT',",
+				"     updateHttpMethod: 'PATCH',",
+				"     timeout: 30,",
+				"     requestInterval: 0,",
+				"     requestFormat: ['type' -> 'json'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink2"
+				"     skipDuplicateMapOutputs: true) ~> pushToREST"
 			]
 		}
 	}
