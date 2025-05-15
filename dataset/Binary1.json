@@ -1,15 +1,17 @@
 {
-	"name": "fileStudentsNationsXML",
+	"name": "Binary1",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "FileServer1",
+			"referenceName": "AzureBlobStorage1",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
 			"location": {
-				"type": "FileServerLocation"
+				"type": "AzureBlobStorageLocation",
+				"fileName": "studentsNationsXML",
+				"container": "nations"
 			}
 		}
 	}
