@@ -23,13 +23,6 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "nationsDated",
-						"type": "DatasetReference"
-					},
-					"name": "jsonUtf8"
-				},
-				{
-					"dataset": {
 						"referenceName": "studentsNationsISO88591",
 						"type": "DatasetReference"
 					},
@@ -109,22 +102,6 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"nationsWithDate sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     input(",
-				"          name as string,",
-				"          capital as string,",
-				"          population as integer,",
-				"          area as integer,",
-				"          currency as string,",
-				"          languages as string[],",
-				"          region as string,",
-				"          subregion as string,",
-				"          flag as string,",
-				"          currentDate as string",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> jsonUtf8",
 				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
@@ -150,7 +127,7 @@
 				"     store: 'cache',",
 				"     format: 'inline',",
 				"     output: false,",
-				"     saveOrder: 1) ~> sink1"
+				"     saveOrder: 0) ~> sink1"
 			]
 		}
 	}
