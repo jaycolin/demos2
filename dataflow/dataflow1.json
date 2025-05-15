@@ -52,6 +52,12 @@
 				},
 				{
 					"name": "rules"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -87,6 +93,24 @@
 				"     broadcast: 'auto')~> leftJoinWithNations",
 				"leftJoinWithNations alterRow(deleteIf(not(hasPath(students@name))),",
 				"     insertIf(true())) ~> rules",
+				"leftJoinWithNations select(mapColumn(",
+				"          name = students@name,",
+				"          college,",
+				"          number_of_students,",
+				"          name = nations@name,",
+				"          capital,",
+				"          population,",
+				"          area,",
+				"          currency,",
+				"          languages,",
+				"          region,",
+				"          subregion,",
+				"          flag,",
+				"          currentDate",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 derive(xml = ERROR_FUNCTION('')) ~> derivedColumn1",
 				"nationsWithDate sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
