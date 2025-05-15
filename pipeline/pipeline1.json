@@ -27,7 +27,7 @@
 				}
 			},
 			{
-				"name": "Copy data1",
+				"name": "pushToREST",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -80,11 +80,11 @@
 				]
 			},
 			{
-				"name": "Copy data2",
+				"name": "downloadXML",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Copy data1",
+						"activity": "pushToREST",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -108,11 +108,23 @@
 							"supportRFC5988": "true"
 						}
 					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "FileServerWriteSettings"
+						}
+					},
 					"enableStaging": false
 				},
 				"inputs": [
 					{
 						"referenceName": "RestResource1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "studentsNationsXML",
 						"type": "DatasetReference"
 					}
 				]
