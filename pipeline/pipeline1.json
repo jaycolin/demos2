@@ -108,23 +108,11 @@
 							"supportRFC5988": "true"
 						}
 					},
-					"sink": {
-						"type": "BinarySink",
-						"storeSettings": {
-							"type": "FileServerWriteSettings"
-						}
-					},
 					"enableStaging": false
 				},
 				"inputs": [
 					{
 						"referenceName": "RestResource1",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "fileStudentsNationsXML",
 						"type": "DatasetReference"
 					}
 				]

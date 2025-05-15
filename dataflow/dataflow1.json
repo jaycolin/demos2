@@ -13,7 +13,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "students",
+						"referenceName": "studentsDB",
 						"type": "DatasetReference"
 					},
 					"name": "students",
