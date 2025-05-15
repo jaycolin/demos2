@@ -26,21 +26,7 @@
 						"referenceName": "nationsDated",
 						"type": "DatasetReference"
 					},
-					"name": "blobNationsDated"
-				},
-				{
-					"dataset": {
-						"referenceName": "studentsNationsUtf8",
-						"type": "DatasetReference"
-					},
-					"name": "studentsNationsUtf8"
-				},
-				{
-					"dataset": {
-						"referenceName": "studentsNationsISO88591",
-						"type": "DatasetReference"
-					},
-					"name": "studentsNationsISO88591"
+					"name": "jsonUtf8"
 				}
 			],
 			"transformations": [
@@ -52,12 +38,6 @@
 				},
 				{
 					"name": "rules"
-				},
-				{
-					"name": "select1"
-				},
-				{
-					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -93,24 +73,6 @@
 				"     broadcast: 'auto')~> leftJoinWithNations",
 				"leftJoinWithNations alterRow(deleteIf(not(hasPath(students@name))),",
 				"     insertIf(true())) ~> rules",
-				"leftJoinWithNations select(mapColumn(",
-				"          name = students@name,",
-				"          college,",
-				"          number_of_students,",
-				"          name = nations@name,",
-				"          capital,",
-				"          population,",
-				"          area,",
-				"          currency,",
-				"          languages,",
-				"          region,",
-				"          subregion,",
-				"          flag,",
-				"          currentDate",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 derive(xml = ERROR_FUNCTION('')) ~> derivedColumn1",
 				"nationsWithDate sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -126,15 +88,7 @@
 				"          currentDate as string",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> blobNationsDated",
-				"leftJoinWithNations sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> studentsNationsUtf8",
-				"leftJoinWithNations sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> studentsNationsISO88591"
+				"     skipDuplicateMapOutputs: true) ~> jsonUtf8"
 			]
 		}
 	}
