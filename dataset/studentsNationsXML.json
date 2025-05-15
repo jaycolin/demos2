@@ -1,5 +1,5 @@
 {
-	"name": "Binary1",
+	"name": "studentsNationsXML",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "studentsNationsXML",
+				"fileName": "studentsNations.xml",
 				"container": "nations"
 			}
 		}
