@@ -144,10 +144,13 @@
 				"     requestFormat: ['type' -> 'json'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> pushToREST",
-				"select1 sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
+				"select1 sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: false,",
+				"     saveOrder: 1) ~> sink1"
 			]
 		}
 	}
