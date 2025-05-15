@@ -54,10 +54,14 @@
 					"name": "rules"
 				},
 				{
-					"name": "select1"
+					"name": "filterColumns"
 				},
 				{
-					"name": "derivedColumn1"
+					"name": "buildXMLcolumn"
+				},
+				{
+					"name": "selectXML",
+					"description": "concatenate columns in XML format"
 				}
 			],
 			"scriptLines": [
@@ -91,7 +95,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> leftJoinWithNations",
-				"select1 alterRow(deleteIf(not(hasPath(students@name))),",
+				"filterColumns alterRow(deleteIf(not(hasPath(students@name))),",
 				"     insertIf(true())) ~> rules",
 				"leftJoinWithNations select(mapColumn(",
 				"          name = nations@name,",
@@ -108,9 +112,27 @@
 				"          currentDate",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 derive({<item>} = ERROR_FUNCTION('concat(name,college,number_of_students,capital,population,area,currency,languagesregion,subregionflag,...)')) ~> derivedColumn1",
-				"select1 sink(allowSchemaDrift: true,",
+				"     skipDuplicateMapOutputs: true) ~> filterColumns",
+				"filterColumns derive({<items>} = ERROR_FUNCTION('concat(name,college,number_of_students,capital,population,area,currency,languagesregion,subregionflag,...)'),",
+				"          {</items>} = ERROR_FUNCTION('')) ~> buildXMLcolumn",
+				"buildXMLcolumn select(mapColumn(",
+				"          name,",
+				"          college,",
+				"          number_of_students,",
+				"          capital,",
+				"          population,",
+				"          area,",
+				"          currency,",
+				"          languages,",
+				"          region,",
+				"          subregion,",
+				"          flag,",
+				"          currentDate,",
+				"          {<item>} = {<items>}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectXML",
+				"filterColumns sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> saveBlob",
@@ -129,7 +151,7 @@
 				"     requestFormat: ['type' -> 'json'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> pushToREST",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"selectXML sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
