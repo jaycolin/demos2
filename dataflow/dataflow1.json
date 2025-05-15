@@ -1,0 +1,95 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "NationsInput",
+						"type": "DatasetReference"
+					},
+					"name": "nations"
+				},
+				{
+					"dataset": {
+						"referenceName": "students",
+						"type": "DatasetReference"
+					},
+					"name": "students",
+					"description": "Import data from "
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "nationsDated",
+						"type": "DatasetReference"
+					},
+					"name": "jsonUtf8"
+				}
+			],
+			"transformations": [
+				{
+					"name": "nationsWithDate"
+				},
+				{
+					"name": "leftJoinWithNations"
+				},
+				{
+					"name": "rules"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          name as string,",
+				"          capital as string,",
+				"          population as integer,",
+				"          area as integer,",
+				"          currency as string,",
+				"          languages as string[],",
+				"          region as string,",
+				"          subregion as string,",
+				"          flag as string",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'arrayOfDocuments') ~> nations",
+				"source(output(",
+				"          name as string,",
+				"          college as string,",
+				"          number_of_students as integer",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> students",
+				"nations derive(currentDate = toString(currentDate(), 'YYYY-MM-dd')) ~> nationsWithDate",
+				"students, nationsWithDate join(students@name == nations@name,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> leftJoinWithNations",
+				"leftJoinWithNations alterRow(deleteIf(not(hasPath(students@name))),",
+				"     insertIf(true())) ~> rules",
+				"nationsWithDate sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          name as string,",
+				"          capital as string,",
+				"          population as integer,",
+				"          area as integer,",
+				"          currency as string,",
+				"          languages as string[],",
+				"          region as string,",
+				"          subregion as string,",
+				"          flag as string,",
+				"          currentDate as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> jsonUtf8"
+			]
+		}
+	}
+}

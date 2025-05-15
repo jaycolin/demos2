@@ -1,0 +1,54 @@
+{
+	"name": "NationsInput",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "nations.json",
+				"container": "nations"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"capital": {
+					"type": "string"
+				},
+				"population": {
+					"type": "integer"
+				},
+				"area": {
+					"type": "integer"
+				},
+				"currency": {
+					"type": "string"
+				},
+				"languages": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"region": {
+					"type": "string"
+				},
+				"subregion": {
+					"type": "string"
+				},
+				"flag": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

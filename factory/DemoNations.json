@@ -1,0 +1,9 @@
+{
+	"name": "DemoNations",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "a0fd2771-e94d-4a1a-8567-edd851498e8f",
+		"tenantId": "9849e9ba-fabf-42dc-a672-f395894fd4a9"
+	}
+}
